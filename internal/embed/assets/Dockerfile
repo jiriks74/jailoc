@@ -16,9 +16,9 @@
 # Pinned versions — Renovate comments tell the bot which datasource to poll
 # for automated version-bump PRs.
 # renovate: datasource=node-version depName=node versioning=node
-ARG NODE_VERSION=24.15.0
+ARG NODE_VERSION=26.3.0
 # renovate: datasource=npm depName=yaml-language-server
-ARG YAML_LS_VERSION=1.22.0
+ARG YAML_LS_VERSION=1.23.0
 # renovate: datasource=npm depName=typescript-language-server
 ARG TS_LS_VERSION=5.1.3
 # renovate: datasource=npm depName=typescript
@@ -28,7 +28,7 @@ ARG PYRIGHT_VERSION=1.1.409
 # renovate: datasource=npm depName=bash-language-server
 ARG BASH_LS_VERSION=5.6.0
 # renovate: datasource=github-releases depName=sst/opencode
-ARG OPENCODE_VERSION=v1.14.22
+ARG OPENCODE_VERSION=v1.15.13
 
 # =============================================================================
 # Builder stage — compile language servers and install npm modules.
@@ -79,9 +79,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 #   ripgrep (rg), fd-find, jq — fast search/filter tools used by OpenCode
 #   unzip, xz-utils        — archive extraction for runtime downloads
 #   iptables               — network isolation: entrypoint.sh blocks RFC 1918
+#   libatomic1             — required by Node.js 26+ runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates git openssh-client sudo \
-    python3 ripgrep fd-find jq unzip xz-utils iptables \
+    python3 ripgrep fd-find jq unzip xz-utils iptables libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Node.js — installed again in the final stage (not copied from builder)
