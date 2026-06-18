@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.15.1](https://github.com/jiriks74/jailoc/compare/v1.16.0...v1.15.1) (2026-06-18)
+
+
+### Features
+
+* **cmd:** add session continuation and rewrite exit title ([#154](https://github.com/jiriks74/jailoc/issues/154)) ([66059e3](https://github.com/jiriks74/jailoc/commit/66059e38f28408a5b4ad9a22b77926ce5257d9c5))
+* **config:** add enable_docker option to opt out of DinD sidecar ([#147](https://github.com/jiriks74/jailoc/issues/147)) ([e523e2e](https://github.com/jiriks74/jailoc/commit/e523e2efd20eee2d0744a369323319bc2095f671))
+* **dind:** switch to rootless Docker daemon for iptables tamper resistance ([#143](https://github.com/jiriks74/jailoc/issues/143)) ([6248c53](https://github.com/jiriks74/jailoc/commit/6248c5399b45425fee18a34b4e3cf05c02185f0b))
+* **embed:** upgrade pinned tool versions ([#188](https://github.com/jiriks74/jailoc/issues/188)) ([6be8ff8](https://github.com/jiriks74/jailoc/commit/6be8ff8be991025b962c1ec54a9437de7d1c3a6c))
+* **logging:** add always-on debug file logging ([#172](https://github.com/jiriks74/jailoc/issues/172)) ([d407654](https://github.com/jiriks74/jailoc/commit/d4076543b9375cccb6cd2268be58cc647a655ac5))
+* **nix:** Add `apps` and `formatter` to flake ([#176](https://github.com/jiriks74/jailoc/issues/176)) ([66878f8](https://github.com/jiriks74/jailoc/commit/66878f8293a32c8f21216e22cb892018b87dd2f2))
+
+
+### Bug Fixes
+
+* **cmd:** close parent's PTY slave fd to unblock attach on child exit ([#187](https://github.com/jiriks74/jailoc/issues/187)) ([9f1e1f2](https://github.com/jiriks74/jailoc/commit/9f1e1f22267019adeb6881a75e34e59907c7fe0e))
+* **cmd:** enable Windows cross-compilation with PTY fallback ([#161](https://github.com/jiriks74/jailoc/issues/161)) ([e90baf5](https://github.com/jiriks74/jailoc/commit/e90baf5040cf62080001317f547de1ff6d484ec7))
+* **cmd:** replace creack/pty with go-pty for cross-platform PTY support ([#166](https://github.com/jiriks74/jailoc/issues/166)) ([5ad0cc1](https://github.com/jiriks74/jailoc/commit/5ad0cc18a29f3074b9525a12ec21649133ee66c9))
+* **cmd:** unwrap build errors, remove premature startup message ([#180](https://github.com/jiriks74/jailoc/issues/180)) ([252cf1f](https://github.com/jiriks74/jailoc/commit/252cf1fed20080d492e1cbb926300b9ca88ecb77))
+* **config:** mount OpenCode config directories read-write ([#156](https://github.com/jiriks74/jailoc/issues/156)) ([178f857](https://github.com/jiriks74/jailoc/commit/178f8574adb60eddfefc83931404ea589f71a65e))
+* **config:** use filepath.IsAbs for cross-platform path validation ([#165](https://github.com/jiriks74/jailoc/issues/165)) ([6baf43e](https://github.com/jiriks74/jailoc/commit/6baf43e0c60343733cad589f3689c61f37777178))
+* **deps:** bump the go-minor-patch group across 1 directory with 2 updates ([#189](https://github.com/jiriks74/jailoc/issues/189)) ([3847a0b](https://github.com/jiriks74/jailoc/commit/3847a0b5a3adf7dbd4415da2d618f4e3277be70f))
+* **docker:** clarify overlay build status message ([#162](https://github.com/jiriks74/jailoc/issues/162)) ([f0aa418](https://github.com/jiriks74/jailoc/commit/f0aa41809b81e17e2ca1281caadf5d0f3613211a))
+* **docker:** prepend ARG BASE to overlay Dockerfiles ([#182](https://github.com/jiriks74/jailoc/issues/182)) ([62f443b](https://github.com/jiriks74/jailoc/commit/62f443b9d5cf3cdf708fdb1d56e7ec14f56b86b8))
+* **entrypoint:** pre-create OpenCode config .gitignore to prevent EROFS crash ([#148](https://github.com/jiriks74/jailoc/issues/148)) ([ce08080](https://github.com/jiriks74/jailoc/commit/ce08080e56acd042584148cb2989ecff086ff5a6))
+* **release:** enable force-tag-creation for draft releases ([#125](https://github.com/jiriks74/jailoc/issues/125)) ([37a2469](https://github.com/jiriks74/jailoc/commit/37a2469e4735d5630113ca41e78b5f0298738468))
+
+
+### Documentation
+
+* **how-to:** add troubleshooting page ([#174](https://github.com/jiriks74/jailoc/issues/174)) ([948d93e](https://github.com/jiriks74/jailoc/commit/948d93e6b303802956629e99aa73154271f47fab))
+* **network:** document HTTP proxy allowlisting for private networks ([#146](https://github.com/jiriks74/jailoc/issues/146)) ([6671a6c](https://github.com/jiriks74/jailoc/commit/6671a6c43c17420debd3ab540819523df577471a))
+
+
+### Miscellaneous
+
+* **deps:** bump goreleaser/goreleaser-action in the all group ([#175](https://github.com/jiriks74/jailoc/issues/175)) ([132de64](https://github.com/jiriks74/jailoc/commit/132de64eef360549d435347ee6087ecd7d904de1))
+
 ## [1.16.0](https://github.com/seznam/jailoc/compare/v1.15.1...v1.16.0) (2026-06-05)
 
 
