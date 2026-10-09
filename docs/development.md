@@ -39,6 +39,16 @@ The pipeline runs on GitHub Actions. Most workflows trigger on every branch and 
 
 Integration tests run as part of the CI workflow on `v*` tags with `go test -tags=integration`. GoReleaser builds static binaries (`CGO_ENABLED=0`) for `linux/darwin` x `amd64/arm64`. Configs live in `.goreleaser.yml` and `.github/workflows/`.
 
+### Dependabot Nix vendorHash
+
+[`nix-vendor-hash.yml`](https://github.com/seznam/jailoc/blob/main/.github/workflows/nix-vendor-hash.yml) handles `go.mod`/`go.sum` changes pushed to `main`, manual runs, and same-repository PRs targeting `main` authored by Dependabot. The PR gate checks the author, not the actor, so maintainer-triggered updates also qualify.
+
+The `update-vendor-hash` job checks out the exact source commit and runs `nix-update` to edit `flake.nix`. When that file changes, it formats, checks, builds, and runs the package. It then commits only `flake.nix` to the Dependabot branch, or opens the maintenance PR against `main` for push/manual runs. The Dependabot push is non-force, so concurrent branch advances reject the push.
+
+The job has repository write permissions while evaluating and executing PR code. Nix build sandboxing does not isolate the entire job: `nix run` executes the application outside the build sandbox. Publication uses `GITHUB_TOKEN`; the Dependabot branch commit includes [`[dependabot skip]`](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/manage-your-dependency-security/manage-dependabot-prs#allowing-dependabot-to-rebase-and-force-push-over-extra-commits), allowing Dependabot to rebase and replace it.
+
+After the token-generated push, a contributor with write access must select **Approve workflows to run** on the PR to start the resulting approval-required `pull_request` CI runs. See [approving workflow runs](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/approve-runs-from-forks). [`GITHUB_TOKEN` pushes do not trigger `push` workflows](https://docs.github.com/en/actions/concepts/security/github_token#when-github_token-triggers-workflow-runs).
+
 ## Default container contents
 
 The embedded Dockerfile defines an Ubuntu 24.04 base image. Exact versions are pinned there.
