@@ -117,6 +117,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           if git diff --quiet -- flake.nix; then
             exit 0
@@ -126,8 +127,11 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -c core.hooksPath=/dev/null commit --only \
             -m 'chore(nix): update vendorHash [dependabot skip]' -- flake.nix
-          # The commit's parent is the original PR head; concurrent advances reject this push.
-          git -c core.hooksPath=/dev/null push origin "HEAD:refs/heads/$HEAD_BRANCH"
+          # Compare-and-swap against the original PR head: rejects the push if the branch
+          # advanced or was deleted (e.g. PR closed/superseded) while `calculate` ran.
+          git -c core.hooksPath=/dev/null push \
+            --force-with-lease="refs/heads/$HEAD_BRANCH:$HEAD_SHA" \
+            origin "HEAD:refs/heads/$HEAD_BRANCH"
       - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         if: github.event_name != 'pull_request'
         with:
